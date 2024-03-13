@@ -5,10 +5,11 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
+@Transactional
 @RequestScoped
 public class ImpUserDoa implements UserDoa {
     @PersistenceContext(name = "jpa-unit")
@@ -22,12 +23,8 @@ public class ImpUserDoa implements UserDoa {
     @Override
     public User create(User user) {
         /* handle SQLIntegrityConstraintViolationException */
-        try {
-            em.persist(user);
-            return user;
-        } catch (Exception e) {
-            throw e;
-        }
+        em.persist(user);
+        return user;
     }
 
     @Override
@@ -55,6 +52,7 @@ public class ImpUserDoa implements UserDoa {
         em.remove(user);
         return user;
     }
+
     public User get(String login, String password) {
         try {
             return em.createNamedQuery("User.findByLoginAndPassword", User.class)

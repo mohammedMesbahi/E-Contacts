@@ -5,11 +5,9 @@ import estm.dsic.dao.user.ImpUserDoa;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.Vector;
-import java.util.stream.Collectors;
 
 @Named
 @RequestScoped
@@ -45,15 +43,18 @@ public class ImpUserController implements UserController {
     @Override
     public List<User> getAll() {
         List<User> usersList = userDoa.get();
-        List<User> modifiedList = new Vector<>();
+        List<User> users = new Vector<>();
+        if (usersList == null) {
+            return null;
+        }
         for (User user : usersList) {
             if (!user.istAdmin()) {
                 user.setAdmin(null);
                 user.setPassword(null);
-                modifiedList.add(user);
+                users.add(user);
             }
         }
-        return usersList;
+        return users;
     }
 
     @Override
