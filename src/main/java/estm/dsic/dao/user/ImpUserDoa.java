@@ -3,6 +3,7 @@ package estm.dsic.dao.user;
 import estm.dsic.beans.User;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -38,9 +39,13 @@ public class ImpUserDoa implements UserDoa {
         return null;
     }
     public User get(String login, String password) {
-        return em.createNamedQuery("User.findByLoginAndPassword", User.class)
-                .setParameter("login", login)
-                .setParameter("password", password)
-                .getSingleResult();
+        try {
+            return em.createNamedQuery("User.findByLoginAndPassword", User.class)
+                    .setParameter("login", login)
+                    .setParameter("password", password)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }

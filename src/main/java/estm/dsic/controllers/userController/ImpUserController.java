@@ -5,9 +5,11 @@ import estm.dsic.dao.user.ImpUserDoa;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.transaction.Transactional;
 
 @Named
 @RequestScoped
+@Transactional
 public class ImpUserController implements UserController {
     @Inject
     private ImpUserDoa userDoa;
@@ -19,11 +21,7 @@ public class ImpUserController implements UserController {
 
     @Override
     public User create(User user) {
-        try {
-            return userDoa.create(user);
-        } catch (Exception e) {
-            throw e;
-        }
+        return userDoa.create(user);
     }
 
     @Override
