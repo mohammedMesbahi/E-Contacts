@@ -1,8 +1,7 @@
 package estm.dsic.controllers.userController;
 
 import estm.dsic.beans.User;
-import estm.dsic.controllers.shared.DefaultController;
-import jakarta.transaction.Transactional;
+import estm.dsic.controllers.sharedController.DefaultController;
 
 import java.util.List;
 

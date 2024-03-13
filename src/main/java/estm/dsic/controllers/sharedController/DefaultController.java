@@ -1,4 +1,4 @@
-package estm.dsic.controllers.shared;
+package estm.dsic.controllers.sharedController;
 
 public interface DefaultController<T, L>{
     T get(L t);

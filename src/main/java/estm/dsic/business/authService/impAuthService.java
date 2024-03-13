@@ -5,7 +5,6 @@ import estm.dsic.business.authService.interfaces.AuthService;
 import estm.dsic.controllers.userController.ImpUserController;
 import estm.dsic.dto.UserDTO;
 import jakarta.inject.Inject;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.ws.rs.Consumes;
@@ -15,9 +14,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
-import jdk.jpackage.internal.Log;
-
-import java.io.Console;
 
 @Path("/auth")
 public class impAuthService implements AuthService {
