@@ -7,6 +7,7 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.List;
 
 @RequestScoped
 public class ImpUserDoa implements UserDoa {
@@ -31,12 +32,28 @@ public class ImpUserDoa implements UserDoa {
 
     @Override
     public User update(User user) {
-        return null;
+        return em.merge(user);
     }
 
     @Override
     public User delete(User user) {
         return null;
+    }
+
+    @Override
+    public List<User> get() {
+        return em.createQuery("select u from User u where u.admin=false", User.class)
+                .getResultList();
+    }
+
+    @Override
+    public User delete(Long id) {
+        User user = em.find(User.class, id);
+        if (user == null) {
+            return null;
+        }
+        em.remove(user);
+        return user;
     }
     public User get(String login, String password) {
         try {
@@ -47,5 +64,45 @@ public class ImpUserDoa implements UserDoa {
         } catch (NoResultException e) {
             return null;
         }
+    }
+
+    @Override
+    public User verify(Long id) {
+        User user = em.find(User.class, id);
+        if (user == null) {
+            return null;
+        }
+        user.setVerified(true);
+        return em.merge(user);
+    }
+
+    @Override
+    public User unVerify(Long id) {
+        User user = em.find(User.class, id);
+        if (user == null) {
+            return null;
+        }
+        user.setVerified(false);
+        return em.merge(user);
+    }
+
+    @Override
+    public User suspend(Long id) {
+        User user = em.find(User.class, id);
+        if (user == null) {
+            return null;
+        }
+        user.setSuspended(true);
+        return em.merge(user);
+    }
+
+    @Override
+    public User unSuspend(Long id) {
+        User user = em.find(User.class, id);
+        if (user == null) {
+            return null;
+        }
+        user.setSuspended(false);
+        return em.merge(user);
     }
 }

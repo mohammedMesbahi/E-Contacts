@@ -1,5 +1,7 @@
 package estm.dsic.dao;
 
+import java.util.List;
+
 public interface CrudAble<T, L> {
     T get(L t);
 
@@ -8,4 +10,5 @@ public interface CrudAble<T, L> {
     T update(T t);
 
     T delete(T t);
+    List<T> get();
 }

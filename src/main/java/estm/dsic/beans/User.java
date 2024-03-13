@@ -3,6 +3,7 @@ package estm.dsic.beans;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.lang.annotation.Repeatable;
 
 @Entity
 @Table(name = "user")
@@ -23,6 +24,12 @@ public class User implements Serializable{
     @Column(name = "isSuspended",columnDefinition = "BOOLEAN default 0")
     private Boolean suspended;
 
+
+    public User() {
+        admin = false;
+        verified = false;
+        suspended = false;
+    }
     public Boolean getAdmin() {
         return admin;
     }
