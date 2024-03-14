@@ -5,12 +5,10 @@ import estm.dsic.business.authService.interfaces.AuthService;
 import estm.dsic.controllers.userController.ImpUserController;
 import estm.dsic.dto.UserDTO;
 import jakarta.inject.Inject;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
@@ -41,8 +39,7 @@ public class impAuthService implements AuthService {
                     session.setAttribute("authUser", authUser);
                     // Create a new cookie with the necessary information . sameSite=Strict
                     NewCookie cookie = new NewCookie("userID", String.valueOf(authUser.getId()), "/", "", "JWT",
-                            60 * 60 * 24 * 30, false, true);
-
+                            60 * 60 * 24 * 30, false, false);
                     // Add the cookie to the response
                     UserDTO userDTO = new UserDTO(authUser);
                     return Response.ok().cookie(cookie).entity(userDTO).build();
@@ -90,5 +87,10 @@ public class impAuthService implements AuthService {
         } catch (Exception e) {
             return Response.serverError().entity(e.getMessage()).build();
         }
+    }
+    @GET
+    @Path("/test")
+    public Response test() {
+        return Response.ok().entity("test").build();
     }
 }

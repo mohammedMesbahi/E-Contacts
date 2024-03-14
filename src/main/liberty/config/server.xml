@@ -34,6 +34,11 @@
     <httpEndpoint httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint"/>
 
     <webApplication id="E-Contacts" location="E-Contacts.war" name="E-Contacts"/>
-    <httpSession cookieSameSite="Lax"/>
+    <cors id="corsFilter" domain="http://localhost:9080/E-Contacts/"
+          allowedOrigins="*"
+          allowedMethods="GET, POST, PUT, DELETE, OPTIONS"
+          allowedHeaders="Content-Type, Authorization,Set-Cookie,Cookie"
+          exposeHeaders="Content-Type, Authorization,Set-Cookie,Cookie"
+          maxAge="3600" />
 
 </server>
