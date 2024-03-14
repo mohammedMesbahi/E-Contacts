@@ -30,8 +30,10 @@
                     user="user1"
                     password="user1"/>
     </dataSource>
-    
-    <httpEndpoint httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint" />
-    
+
+    <httpEndpoint httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint"/>
+
     <webApplication id="E-Contacts" location="E-Contacts.war" name="E-Contacts"/>
+    <httpSession cookieSameSite="Lax"/>
+
 </server>

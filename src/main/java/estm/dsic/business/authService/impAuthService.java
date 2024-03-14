@@ -39,12 +39,13 @@ public class impAuthService implements AuthService {
                 } else {
                     HttpSession session = request.getSession();
                     session.setAttribute("authUser", authUser);
-                    // Create a new cookie with the necessary information
-                    NewCookie cookie = new NewCookie("userID", authUser.getId() +
-                            "", "/", "", "JWT", 3600, false, false);
+                    // Create a new cookie with the necessary information . sameSite=Strict
+                    NewCookie cookie = new NewCookie("userID", String.valueOf(authUser.getId()), "/", "", "JWT",
+                            60 * 60 * 24 * 30, false, true);
+
                     // Add the cookie to the response
                     UserDTO userDTO = new UserDTO(authUser);
-                    return Response.ok(authUser).cookie(cookie).entity(userDTO).build();
+                    return Response.ok().cookie(cookie).entity(userDTO).build();
                 }
             } else {
                 return Response.status(Response.Status.UNAUTHORIZED.getStatusCode(), "login or password is incorrect")
